@@ -78,8 +78,8 @@ def load_matrices():
     Assumes all CSV files are stored in '/home/vhaney/EKG/filtered_data/'.
     """
     #base_path = "/home/vhaney/EKG/filtered_data/nonresample/"
-    #base_path = "/home/vhaney/EKG/UCR_Beef/Data/"
-    base_path = "/home/vhaney/EKG/UCR_CinCECGTorso/Data/"
+    base_path = "/home/vhaney/EKG/UCR_Beef/Data/"
+    #base_path = "/home/vhaney/EKG/UCR_CinCECGTorso/Data/"
 
     while True:
         # Prompt user for the tensor name (without '_matrix.csv')
@@ -334,6 +334,7 @@ def feature_map_m(x,fourier_sample,feature_coeff,bandwidth = .1):  #original 0.1
     Returns (m, 2*p, n) tensor
 
     '''
+    #print(f"bandwidth used in feature_map_m: {bandwidth}")
     n = len(x) #how many rows in the vector
     m = len(x[0]) # how many columns are there
     x = tf.transpose(x) # transpose x to: (m,n)
@@ -514,7 +515,8 @@ LU_m = tf.tile(LU_m, [10, 1, 1])
 
 # new feature map to make alpha and learning alpha
 def feature_map_m_0(x, Lambda_unitary = LU, fourier_sample = fourier_sample_gamma,
-                  feature_coeff = feature_coeff, bandwidth = .1):#, feature_map = feature_map,
+                  feature_coeff = feature_coeff, bandwidth = .05):#, bandwidth.1 feature_map = feature_map,
+  #print(f"bandwidth used in feature_map_m_0: {bandwidth}")
   #print(x.shape)
   m = len(x[0]) #how many columns are there of n-dim vectors
   #print(m)
@@ -599,6 +601,9 @@ def alpha_m(t, x, b,
   x \in (n,m): m n-dim vectors input. (n,m)
   b \in ((2*p-2, m))
   def alpha_test_m(x, b = beta_t, fourier_sample = fourier_sample_gamma, feature_coeff = feature_coeff):
+  feature_map_m_0 is a function that is used here. It is the matrix form of the feature_map_0 function.
+    The feature_map_0 function is the projection of the fourier features (zeros at the endpoints).
+  feature_map_m_0(x, Lambda_unitary, fourier_sample, feature_coeff, bandwidth = .1)
 
   Returns M: (m,n) there are m functions provided for each n-dimensional vector
   I want it to return a (m,n) matrix (m trajectories, n -dimensional)
@@ -1330,7 +1335,8 @@ x_trajectories = tf.concat(x_trajectories, axis=1)
 """# copy files"""
 
 #base_path = "/home/vhaney/EKG/UCR_Beef/Results/"
-base_path = "/home/vhaney/EKG/UCR_CinCECGTorso/Results/"
+base_path = "/home/vhaney/EKG/UCR_Beef/Results_sigma2/"
+#base_path = "/home/vhaney/EKG/UCR_CinCECGTorso/Results/"
 
 # file for objective function
 file_obj = f"{test_label}{train_label}_dist_obj.csv"
