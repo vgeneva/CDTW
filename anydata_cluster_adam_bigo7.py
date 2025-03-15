@@ -78,8 +78,8 @@ def load_matrices():
     Assumes all CSV files are stored in '/home/vhaney/EKG/filtered_data/'.
     """
     #base_path = "/home/vhaney/EKG/filtered_data/nonresample/"
-    base_path = "/home/vhaney/EKG/UCR_Beef/Data/"
-    #base_path = "/home/vhaney/EKG/UCR_CinCECGTorso/Data/"
+    #base_path = "/home/vhaney/EKG/UCR_Beef/Data/"
+    base_path = "/home/vhaney/EKG/UCR_CinCECGTorso/Data/"
 
     while True:
         # Prompt user for the tensor name (without '_matrix.csv')
@@ -1335,8 +1335,9 @@ x_trajectories = tf.concat(x_trajectories, axis=1)
 """# copy files"""
 
 #base_path = "/home/vhaney/EKG/UCR_Beef/Results/"
-base_path = "/home/vhaney/EKG/UCR_Beef/Results_sigma2/"
+#base_path = "/home/vhaney/EKG/UCR_Beef/Results_sigma2/"
 #base_path = "/home/vhaney/EKG/UCR_CinCECGTorso/Results/"
+base_path = "/home/vhaney/EKG/UCR_CinCECGTorso/Results_sigma2/"
 
 # file for objective function
 file_obj = f"{test_label}{train_label}_dist_obj.csv"
