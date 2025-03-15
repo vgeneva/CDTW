@@ -45,7 +45,7 @@ Define $x(0)$ vector. I will start with 256.
 
 # input n for i_traj function to get x(0) 
 
-
+"""
 try:
    signal_length = input("Input signal length, i.e. 256: ")
    signal_length = int(signal_length)
@@ -53,7 +53,7 @@ try:
 except ValueError:
     print("Invalid input. Please enter an integer.")
     sys.exit(1)
-
+"""
 
 
 #x0 = i_traj(256)
@@ -78,8 +78,9 @@ def load_matrices():
     Assumes all CSV files are stored in '/home/vhaney/EKG/filtered_data/'.
     """
     #base_path = "/home/vhaney/EKG/filtered_data/nonresample/"
-    #base_path = "/home/vhaney/EKG/UCR_Beef/Data/"
-    base_path = "/home/vhaney/EKG/UCR_CinCECGTorso/Data/"
+    base_path = "/home/vhaney/EKG/UCR_Beef/Data/"
+    #base_path = "/home/vhaney/EKG/UCR_CinCECGTorso/Data/"
+    loaded_tensors = []  # List to keep track of loaded tensors
 
     while True:
         # Prompt user for the tensor name (without '_matrix.csv')
@@ -101,15 +102,30 @@ def load_matrices():
             
             # Convert DataFrame to a TensorFlow tensor and store in globals()
             globals()[tensor_name_with_matrix] = tf.convert_to_tensor(df.values, dtype=tf.float64)
-            
+            loaded_tensors.append(tensor_name_with_matrix)  # Add to the list of loaded tensors
             print(f"Loaded {tensor_name_with_matrix} from {csv_file} with shape {globals()[tensor_name_with_matrix].shape}\n")
         
         except Exception as e:
             print(f"Error loading {csv_file}: {e}\n")
 
-# Run the function
-load_matrices()
+      # Auto-detect signal from the first loaded matrix
+    if loaded_tensors:
+        first_tensor_name = globals()[loaded_tensors[0]] # Get the first loaded tensor
+        signal_length = first_tensor_name.shape[0]  # Assume the first dimension is the signal length
+       #print(f"Detected signal length: {signal_length}")
+    else:
+        print("No valid matrix loaded. Exiting...")
+        sys.exit(1)
 
+    print("Detected signal length:", signal_length)
+    # Create x0 based on the detected signal length
+    x0 = i_traj(signal_length) #  create x0 based on the detected signal length
+    
+    return x0
+
+# Run the function
+#load_matrices()
+x0 = load_matrices()
 
 
 #print(Beef1_test_matrix.shape)
@@ -515,7 +531,7 @@ LU_m = tf.tile(LU_m, [10, 1, 1])
 
 # new feature map to make alpha and learning alpha
 def feature_map_m_0(x, Lambda_unitary = LU, fourier_sample = fourier_sample_gamma,
-                  feature_coeff = feature_coeff, bandwidth = .05):#, bandwidth.1 feature_map = feature_map,
+                  feature_coeff = feature_coeff, bandwidth = .1):#, bandwidth.1 feature_map = feature_map,
   #print(f"bandwidth used in feature_map_m_0: {bandwidth}")
   #print(x.shape)
   m = len(x[0]) #how many columns are there of n-dim vectors
@@ -1163,7 +1179,7 @@ b_ini = tf.constant(b_ini, dtype=tf.float64)
 """
 
 try:
-   test_label = input("Input test_label (phinot), i.e. Beef1, N: ")
+   test_label = input("Input test_label (phinot), i.e. type Beef1, N: ")
    tensor_test = test_label + '_test_matrix'
    # check if variable exists in the global space and is a tf tensor
    if tensor_test in globals() and isinstance(globals()[tensor_test], tf.Tensor):
@@ -1176,7 +1192,7 @@ try:
 
    #print(f'TEST Matrix: {tensor_test} with shape: {phinot_m.shape}.')
    #train_label = input("Input train_label (phione), i.e. N, A, V, R, L, E, J, g (j): ")
-   train_label = input("Type Beef, all R, V, L, g (jj), E, N, J , A: ")
+   train_label = input("Input train_label (phione), i.e. type Beef, all R, V, L, g (jj), E, N, J , A: ")
    tensor_train = train_label + '_train_matrix'
    # check if variable exists in the global space and is a tf tensor
    if tensor_train in globals() and isinstance(globals()[tensor_train], tf.Tensor): #globals() is a dictionary
@@ -1337,7 +1353,8 @@ x_trajectories = tf.concat(x_trajectories, axis=1)
 #base_path = "/home/vhaney/EKG/UCR_Beef/Results/"
 #base_path = "/home/vhaney/EKG/UCR_Beef/Results_sigma2/"
 #base_path = "/home/vhaney/EKG/UCR_CinCECGTorso/Results/"
-base_path = "/home/vhaney/EKG/UCR_CinCECGTorso/Results_sigma2/"
+#base_path = "/home/vhaney/EKG/UCR_CinCECGTorso/Results_sigma2/"
+base_path = "/home/vhaney/EKG/test_runs/Beef_runs/Results/"
 
 # file for objective function
 file_obj = f"{test_label}{train_label}_dist_obj.csv"
