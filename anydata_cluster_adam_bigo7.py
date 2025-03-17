@@ -78,8 +78,10 @@ def load_matrices():
     Assumes all CSV files are stored in '/home/vhaney/EKG/filtered_data/'.
     """
     #base_path = "/home/vhaney/EKG/filtered_data/nonresample/"
-    base_path = "/home/vhaney/EKG/UCR_Beef/Data/"
+    #base_path = "/home/vhaney/EKG/UCR_Beef/Data/"
     #base_path = "/home/vhaney/EKG/UCR_CinCECGTorso/Data/"
+    base_path = "/home/vhaney/EKG/UCR_ECG5000/Data"
+
     loaded_tensors = []  # List to keep track of loaded tensors
 
     while True:
@@ -1354,7 +1356,8 @@ x_trajectories = tf.concat(x_trajectories, axis=1)
 #base_path = "/home/vhaney/EKG/UCR_Beef/Results_sigma2/"
 #base_path = "/home/vhaney/EKG/UCR_CinCECGTorso/Results/"
 #base_path = "/home/vhaney/EKG/UCR_CinCECGTorso/Results_sigma2/"
-base_path = "/home/vhaney/EKG/test_runs/Beef_runs/Results/"
+#base_path = "/home/vhaney/EKG/test_runs/Beef_runs/Results/"
+base_path = "/home/vhaney/EKG/UCR_ECG5000/Results"
 
 # file for objective function
 file_obj = f"{test_label}{train_label}_dist_obj.csv"
@@ -1400,40 +1403,6 @@ globals()[df_traj] = pd.DataFrame(x_trajectories)
 globals()[df_traj].to_csv(file_path_5, index=False, header=False)
 print(f'{test_label}{train_label}_x_traj saved to {file_path_5}')
 
-
-
-""" #Origial way of saving to file where data is 
-df_obj = f"df_{test_label}{train_label}_dist_obj"
-globals()[df_obj] = pd.DataFrame(obj_values)
-globals()[df_obj].to_csv(f'{test_label}{train_label}_dist_obj_4.csv', index=False, header=False)
-#print(df_obj)
-print(f'{test_label}{train_label}_dist_obj_4')
-
-
-
-df_sd = f"df_{test_label}{train_label}_dist_sd"
-
-globals()[df_sd] = pd.DataFrame(squared_dist)
-globals()[df_sd].to_csv(f'{test_label}{train_label}_dist_sd_4.csv', index=False, header=False)
-print(f'{test_label}{train_label}_dist_sd_4')
-
-df_b = f"df_{test_label}{train_label}_dist_b"
-globals()[df_b] = pd.DataFrame(beta_grad_dist)
-globals()[df_b].to_csv(f'{test_label}{train_label}_dist_b_4.csv', index=False, header = False)
-print(f'{test_label}{train_label}_dist_b_4')
-
-# Save elapsed time separately
-elapsed_time_filename = f'{test_label}{train_label}_elapsed_time.txt'
-with open(elapsed_time_filename, 'w') as f:
-    f.write(f"{elapsed_time}")
-
-print(f"Elapsed time saved in {elapsed_time_filename}")
-
-df_traj = f"df_{test_label}{train_label}_x_traj"
-globals()[df_traj] = pd.DataFrame(x_trajectories)
-globals()[df_traj].to_csv(f'{test_label}{train_label}_x_traj_4.csv', index=False, header=False)
-print(f'{test_label}{train_label}_x_traj_4')
-"""
 
 
 
