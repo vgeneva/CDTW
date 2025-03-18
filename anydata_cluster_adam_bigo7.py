@@ -80,7 +80,7 @@ def load_matrices():
     #base_path = "/home/vhaney/EKG/filtered_data/nonresample/"
     #base_path = "/home/vhaney/EKG/UCR_Beef/Data/"
     #base_path = "/home/vhaney/EKG/UCR_CinCECGTorso/Data/"
-    base_path = "/home/vhaney/EKG/UCR_ECG5000/Data"
+    base_path = "/home/vhaney/EKG/UCR_TwoLeadECG/Data/"
 
     loaded_tensors = []  # List to keep track of loaded tensors
 
@@ -136,38 +136,7 @@ x0 = load_matrices()
 #print(Beef_train_matrix)
 
 
-"""
 
-N_train_matrix = tf.convert_to_tensor(pd.read_csv('N_train_matrix.csv'), dtype = tf.float64)
-N_test_matrix = tf.convert_to_tensor(pd.read_csv('N_test_matrix.csv'), dtype = tf.float64)
-
-V_train_matrix = tf.convert_to_tensor(pd.read_csv('V_train_matrix.csv'), dtype = tf.float64)
-V_test_matrix = tf.convert_to_tensor(pd.read_csv('V_test_matrix.csv'), dtype = tf.float64)
-
-A_train_matrix = tf.convert_to_tensor(pd.read_csv('A_train_matrix.csv'), dtype = tf.float64)
-A_test_matrix = tf.convert_to_tensor(pd.read_csv('A_test_matrix.csv'), dtype = tf.float64)
-
-R_train_matrix = tf.convert_to_tensor(pd.read_csv('R_train_matrix.csv'), dtype = tf.float64)
-R_test_matrix = tf.convert_to_tensor(pd.read_csv('R_test_matrix.csv'), dtype = tf.float64)
-
-L_train_matrix = tf.convert_to_tensor(pd.read_csv('L_train_matrix.csv'), dtype = tf.float64)
-L_test_matrix = tf.convert_to_tensor(pd.read_csv('L_test_matrix.csv'), dtype = tf.float64)
-
-E_train_matrix = tf.convert_to_tensor(pd.read_csv('E_train_matrix.csv'), dtype = tf.float64)
-E_test_matrix = tf.convert_to_tensor(pd.read_csv('E_test_matrix.csv'), dtype = tf.float64)
-
-J_train_matrix = tf.convert_to_tensor(pd.read_csv('J_train_matrix.csv'), dtype = tf.float64)
-J_test_matrix = tf.convert_to_tensor(pd.read_csv('J_test_matrix.csv'), dtype = tf.float64)
-
-g_train_matrix = tf.convert_to_tensor(pd.read_csv('jj_train_matrix.csv'), dtype = tf.float64)
-g_test_matrix = tf.convert_to_tensor(pd.read_csv('jj_test_matrix.csv'), dtype = tf.float64)
-
-#jj_train_matrix = tf.convert_to_tensor(pd.read_csv('jj_train_matrix.csv'), dtype = tf.float64)
-#jj_test_matrix = tf.convert_to_tensor(pd.read_csv('jj_test_matrix.csv'), dtype = tf.float64)
-
-# bring in all_train_matrix as a tensor 
-all_train_matrix = tf.convert_to_tensor(pd.read_csv('all_train_matrix.csv'), dtype = tf.float64)
-"""
 
 
 """# Kernel Functions"""
@@ -1357,7 +1326,7 @@ x_trajectories = tf.concat(x_trajectories, axis=1)
 #base_path = "/home/vhaney/EKG/UCR_CinCECGTorso/Results/"
 #base_path = "/home/vhaney/EKG/UCR_CinCECGTorso/Results_sigma2/"
 #base_path = "/home/vhaney/EKG/test_runs/Beef_runs/Results/"
-base_path = "/home/vhaney/EKG/UCR_ECG5000/Results"
+base_path = "/home/vhaney/EKG/UCR_TwoLeadECG/Results/"
 
 # file for objective function
 file_obj = f"{test_label}{train_label}_dist_obj.csv"
